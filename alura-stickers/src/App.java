@@ -1,16 +1,15 @@
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Map;
 
 public class App {
-    private static HttpClient newHttpClient;
-
+    
     public static void main(String[] args) throws Exception {
         //conexão HTTP
         String url = "https://imdb-api.com/en/API/Top250Movies/k_6ovkj9j9";
@@ -24,10 +23,20 @@ public class App {
         var parse = new JsonParser();
         List<Map<String, String>>listaDeFilmes = parse.parse(body);
         
+        //manipulando dados
+        var geradora = new GeradoraDeFigurinhas();
         for (Map<String,String> filme : listaDeFilmes) {
-            System.out.println("Titulo: " + filme.get("title"));
-            System.out.println("Imagem: " + filme.get("image"));
-            System.out.println("Nota: " + filme.get("imDbRating"));
+
+            String urlImagem = filme.get("image");
+            String titulo = filme.get("title");
+            
+            InputStream inputStream = new URL(urlImagem).openStream();
+            String nomeArquivo = titulo + ".png";
+            
+            geradora.cria(inputStream, nomeArquivo);
+
+            System.out.println(titulo);
+            System.out.println();
             
         }
         
