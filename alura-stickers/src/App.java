@@ -12,7 +12,7 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         //conexão HTTP
-        String url = "https://imdb-api.com/en/API/Top250Movies/k_6ovkj9j9";
+        String url = "https://api.mocki.io/v2/549a5d8b";
         URI endereco = URI.create(url);
         var client= HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
